@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Fact</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #111;
+      color: #fff;
+      text-align: center;
+    }
+    #fact {
+      font-size: 1.5rem;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <div id="fact">Loading...</div>
+
+  <script>
+    async function loadRandomFact() {
+      try {
+        const response = await fetch('facts.txt');
+        const text = await response.text();
+
+        const lines = text.split('\n').filter(line => line.trim() !== '');
+        const randomLine = lines[Math.floor(Math.random() * lines.length)];
+
+        document.getElementById('fact').textContent = randomLine;
+      } catch (error) {
+        document.getElementById('fact').textContent = 'Error loading facts.';
+        console.error(error);
+      }
+    }
+
+    loadRandomFact();
+  </script>
+</body>
+</html>
